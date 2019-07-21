@@ -2,6 +2,7 @@ package com.github.mikephil.charting.animation;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+
 import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.animation.Easing.EasingFunction;
@@ -14,18 +15,30 @@ import com.github.mikephil.charting.animation.Easing.EasingFunction;
  */
 public class ChartAnimator {
 
-    /** object that is updated upon animation update */
+    public AnimatorUpdateListener getmListener() {
+        return mListener;
+    }
+
+    /**
+     * object that is updated upon animation update
+     */
     private AnimatorUpdateListener mListener;
 
-    /** The phase of drawn values on the y-axis. 0 - 1 */
+
+    /**
+     * The phase of drawn values on the y-axis. 0 - 1
+     */
     @SuppressWarnings("WeakerAccess")
     protected float mPhaseY = 1f;
 
-    /** The phase of drawn values on the x-axis. 0 - 1 */
+    /**
+     * The phase of drawn values on the x-axis. 0 - 1
+     */
     @SuppressWarnings("WeakerAccess")
     protected float mPhaseX = 1f;
 
-    public ChartAnimator() { }
+    public ChartAnimator() {
+    }
 
     @RequiresApi(11)
     public ChartAnimator(AnimatorUpdateListener listener) {
@@ -34,21 +47,33 @@ public class ChartAnimator {
 
     @RequiresApi(11)
     private ObjectAnimator xAnimator(int duration, EasingFunction easing) {
+        float i = 0f;
+        float j = 1f;
 
-        ObjectAnimator animatorX = ObjectAnimator.ofFloat(this, "phaseX", 0f, 1f);
+        if (duration < 0) {
+            i = 1f;
+            j = 0f;
+            duration *=-1;
+        }
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(this, "phaseX", i, j);
         animatorX.setInterpolator(easing);
         animatorX.setDuration(duration);
-
         return animatorX;
     }
 
     @RequiresApi(11)
     private ObjectAnimator yAnimator(int duration, EasingFunction easing) {
+        float i = 0f;
+        float j = 1f;
 
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(this, "phaseY", 0f, 1f);
+        if (duration < 0) {
+            i = 1f;
+            j = 0f;
+            duration *=-1;
+        }
+        ObjectAnimator animatorY = ObjectAnimator.ofFloat(this, "phaseY", i, j);
         animatorY.setInterpolator(easing);
         animatorY.setDuration(duration);
-
         return animatorY;
     }
 
@@ -66,7 +91,7 @@ public class ChartAnimator {
      * Animates values along the X axis.
      *
      * @param durationMillis animation duration
-     * @param easing EasingFunction
+     * @param easing         EasingFunction
      */
     @RequiresApi(11)
     public void animateX(int durationMillis, EasingFunction easing) {
@@ -92,7 +117,7 @@ public class ChartAnimator {
      *
      * @param durationMillisX animation duration along the X axis
      * @param durationMillisY animation duration along the Y axis
-     * @param easing EasingFunction for both axes
+     * @param easing          EasingFunction for both axes
      */
     @RequiresApi(11)
     public void animateXY(int durationMillisX, int durationMillisY, EasingFunction easing) {
@@ -115,8 +140,8 @@ public class ChartAnimator {
      *
      * @param durationMillisX animation duration along the X axis
      * @param durationMillisY animation duration along the Y axis
-     * @param easingX EasingFunction for the X axis
-     * @param easingY EasingFunction for the Y axis
+     * @param easingX         EasingFunction for the X axis
+     * @param easingY         EasingFunction for the Y axis
      */
     @RequiresApi(11)
     public void animateXY(int durationMillisX, int durationMillisY, EasingFunction easingX,
@@ -149,7 +174,7 @@ public class ChartAnimator {
      * Animates values along the Y axis.
      *
      * @param durationMillis animation duration
-     * @param easing EasingFunction
+     * @param easing         EasingFunction
      */
     @RequiresApi(11)
     public void animateY(int durationMillis, EasingFunction easing) {
